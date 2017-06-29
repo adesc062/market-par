@@ -1,0 +1,2 @@
+C:\Users\desca\.android\avd\Nexus_5X_API_23_React_Native.avd
+C:\Development\Tools\Android\sdk\emulator

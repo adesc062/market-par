@@ -7,18 +7,21 @@ const { Types, Creators } = createActions({
   loginRequest: ['username', 'password'],
   loginSuccess: ['username'],
   loginFailure: ['error'],
-  logout: null
+  logout: null,
+  changeFund: ['fund'],
+  changeFundasdas1: (fund) => ({ type: 'CHANGE_FUND_1', total: fund })
 })
 
 export const LoginTypes = Types
 export default Creators
 
 /* ------------- Initial State ------------- */
-
 export const INITIAL_STATE = Immutable({
   username: null,
   error: null,
-  fetching: false
+  fetching: false,
+  fund1: 'xD',
+  fund2: '',
 })
 
 /* ------------- Reducers ------------- */
@@ -37,14 +40,28 @@ export const failure = (state, { error }) =>
 // we've logged out
 export const logout = (state) => INITIAL_STATE
 
+// changing fund1
+//export const fund1 = (state, action) =>
+ // state.merge({ fund1: 'sdsa' })
+
+/*
+export const fund1 = (state = INITIAL_STATE, action) => {
+  return { ...state, fund1: 'asdas' }
+} */
+export const fund = (state, { fund }) => state.merge({ fund1: fund })
+
+
 /* ------------- Hookup Reducers To Types ------------- */
 
-export const reducer = createReducer(INITIAL_STATE, {
-  [Types.LOGIN_REQUEST]: request,
-  [Types.LOGIN_SUCCESS]: success,
-  [Types.LOGIN_FAILURE]: failure,
-  [Types.LOGOUT]: logout
-})
+export const HANDLERS = {
+                          [Types.LOGIN_REQUEST]: request,
+                          [Types.LOGIN_SUCCESS]: success,
+                          [Types.LOGIN_FAILURE]: failure,
+                          [Types.LOGOUT]: logout,
+                          [Types.CHANGE_FUND]: fund
+                        }
+
+export const reducer = createReducer(INITIAL_STATE, HANDLERS)
 
 /* ------------- Selectors ------------- */
 

@@ -5,6 +5,7 @@ import NavigationDrawer from './NavigationDrawer'
 
 // screens identified by the router
 import LaunchScreen from '../Containers/LaunchScreen'
+import FundSelectionScreen from '../Containers/FundSelectionScreen'
 import ListviewExample from '../Containers/ListviewExample'
 import CardExample from '../Containers/CardExample'
 import Login from '../Containers/LoginScreen'
@@ -23,6 +24,7 @@ class NavigationRouter extends Component {
           <Scene key='launchScreen' component={LaunchScreen} title='LaunchScreen' />
           <Scene key='listViewExample' component={ListviewExample}/>
           <Scene key='cardExample' component={CardExample}/>
+          <Scene key='fundSelectionScreen' component={FundSelectionScreen} title='Fund Selection Screen'/>
         </Scene>
       </Router>
     )

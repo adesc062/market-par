@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
   Image,
   Keyboard,
-  LayoutAnimation,
-  Icon
+  LayoutAnimation
 } from 'react-native'
 import { connect } from 'react-redux'
 import Styles from './Styles/LoginScreenStyles'
@@ -22,8 +21,7 @@ class LoginScreen extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func,
     fetching: PropTypes.bool,
-    attemptLogin: PropTypes.func,
-    changeFund1Dispatch: PropTypes.func
+    attemptLogin: PropTypes.func
   }
 
   isAttempting = false
@@ -35,13 +33,10 @@ class LoginScreen extends React.Component {
     this.state = {
       username: 'reactnative@infinite.red',
       password: 'password',
-      fund1: 'AAPL',
-      fund2: 'MSFT',
       visibleHeight: Metrics.screenHeight,
       topLogo: { width: Metrics.screenWidth-40 }
     }
     this.isAttempting = false
-    this.handleChangeFund1 = this.handleChangeFund1.bind(this);
   }
 
   componentWillReceiveProps (newProps) {
@@ -84,20 +79,12 @@ class LoginScreen extends React.Component {
   }
 
   handlePressLogin = () => {
-    const { username, password } = this.state
-    //this.isAttempting = true
+    // const { username, password } = this.state
+    // this.isAttempting = true
     // attempt a login - a saga is listening to pick it up from here.
-    //this.props.attemptLogin(username, password);
+    // this.props.attemptLogin(username, password);
     NavigationActions.launchScreen();
   }
-
-    handleFundPress = () => {
-      // const { username, password } = this.state
-      // this.isAttempting = true
-      // attempt a login - a saga is listening to pick it up from here.
-      // this.props.attemptLogin(username, password);
-      NavigationActions.fundSelectionScreen();
-    }
 
   handleChangeUsername = (text) => {
     this.setState({ username: text })
@@ -107,79 +94,58 @@ class LoginScreen extends React.Component {
     this.setState({ password: text })
   }
 
-  handleChangeFund1 = (text) => {
-    this.props.changeFund1Dispatch(text);
-  }
-
-  handleChangeFund2 = (text) => {
-    this.setState({ fund2: text })
-  }
-
   render () {
-    const { username, password, fund1, fund2 } = this.state
-    const { fetching, fund1x } = this.props
+
+    const { username, password } = this.state
+    const { fetching } = this.props
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
       <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
-       <View style={Styles.form}>
-       <View style={{flex: 1, alignItems: 'center'}}>
-               <NBText>
-                 Year: 1990
-               </NBText>
-           </View>
+        <Image source={Images.logo} style={[Styles.topLogo, this.state.topLogo]} />
+        <View style={Styles.form}>
         <Form>
           <Item stackedLabel>
-            <Label>Fund #1</Label>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <Input
-                ref={(ref) => this.fund1 = ref}
-                value={fund1x}
-                editable={editable}
-                keyboardType='default'
-                returnKeyType='go'
-                autoCapitalize='none'
-                autoCorrect={false}
-                onChangeText={this.handleChangeFund1}
-                underlineColorAndroid='transparent'
-                onSubmitEditing={this.handlePressLogin}
-                onFocus={this.handleFundPress}
-                />
-                <Button onPress={this.handlePressLogin}>
-                  <NBText>
-                    Suggest
-                  </NBText>
-                </Button>
-            </View>
-
+            <Label>Username</Label>
+            <Input
+               ref='username'
+               value={username}
+               editable={editable}
+               keyboardType='default'
+               returnKeyType='next'
+               autoCapitalize='none'
+               autoCorrect={false}
+               onChangeText={this.handleChangeUsername}
+               underlineColorAndroid='transparent'
+               onSubmitEditing={()=> this.password._root.focus()}
+               />
           </Item>
           <Item stackedLabel>
-            <Label>Fund #2</Label>
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <Input
-                ref={(ref) => this.fund2 = ref}
-                value={fund2}
-                editable={editable}
-                keyboardType='default'
-                returnKeyType='go'
-                autoCapitalize='none'
-                autoCorrect={false}
-                onChangeText={this.handleChangeFund2}
-                underlineColorAndroid='transparent'
-                onFocus={this.handlePressLogin}
-                />
-                <Button onPress={this.handlePressLogin}>
-                  <NBText>
-                    Suggest
-                  </NBText>
-                </Button>
-            </View>
+            <Label>Password</Label>
+            <Input
+              ref={(ref) => this.password = ref}
+              value={password}
+              editable={editable}
+              keyboardType='default'
+              returnKeyType='go'
+              autoCapitalize='none'
+              autoCorrect={false}
+              secureTextEntry
+              onChangeText={this.handleChangePassword}
+              underlineColorAndroid='transparent'
+              onSubmitEditing={this.handlePressLogin}
+              />
           </Item>
         </Form>
           <View style={[Styles.loginRow]}>
             <Button style={{flex: 1, justifyContent: 'center'}} full onPress={this.handlePressLogin}>
               <NBText>
-                Finish
+                Sign In
+              </NBText>
+            </Button>
+            <Button style={{flex: 1, justifyContent: 'center'}} full onPress={NavigationActions.pop}>
+              <NBText>
+                Cancel
               </NBText>
             </Button>
           </View>
@@ -193,15 +159,13 @@ class LoginScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    fetching: state.login.fetching,
-    fund1x: state.login.fund1
+    fetching: state.login.fetching
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password)),
-    changeFund1Dispatch: (fund) => dispatch(LoginActions.changeFund(fund))
+    attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password))
   }
 }
 
