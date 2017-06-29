@@ -75,14 +75,6 @@ export default class StockCell extends React.Component {
               <Text style={styles.symbolText}>
                 {this.props.stock.symbol}
               </Text>
-              <Text style={styles.marketText}>
-                {this.props.stock.exchDisp}
-              </Text>
-            </View>
-            <View style={styles.name}>
-              <Text style={styles.nameText}>
-                {this.props.stock.name}
-              </Text>
             </View>
           </View>
         </View>

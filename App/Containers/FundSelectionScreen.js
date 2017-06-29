@@ -85,8 +85,22 @@ constructor(props) {
     });
 
     const that = this;
-
-    finance.symbolSuggest(text.text); /*
+    finance.symbolSuggest(text.text)
+    .then((result) => {
+        const dataSource = [];
+        for (let entry of result) {
+          dataSource.push( {symbol: entry} );
+        }
+        that.setState({
+          dataSource: that.state.dataSource.cloneWithRows(dataSource),
+          loaded: true,
+          helpText: 'Type a company name or stock symbol.',
+        });
+     })
+     .catch((error) => {
+             console.log('Request failed', error);
+     });
+     /*
       .then(response => response.text())
       .then((result) => {
         result = result.replace(/(YAHOO\.util\.ScriptNodeDataSource\.callbacks\()(.*)(\);)/g, '$2');

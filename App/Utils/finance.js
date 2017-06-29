@@ -131,7 +131,7 @@ exports.symbolSuggest = function symbolSuggest(query) {
   const url = `http://d.yimg.com/aq/autoc?query=${query}&region=US&lang=en-US&callback=YAHOO.util.ScriptNodeDataSource.callbacks`;
   console.log(url);
   const that = this;
-  fetch(url)
+  return fetch(url)
    .then(response => response.text())
       .then((result) => {
         result = result.replace(/(YAHOO\.util\.ScriptNodeDataSource\.callbacks\()(.*)(\);)/g, '$2');
@@ -148,11 +148,18 @@ exports.symbolSuggest = function symbolSuggest(query) {
         const apiKey = '&api_key=Gk76mE3xGFbNcozxcY6J';
 
         const url = start + dateGTE + dateLT + tickerPart + symbolsPart + apiKey;
-        fetch(url)
+        return fetch(url)
         .then(response => response.text())
           .then( (result) => {
             const parsedResult = JSON.parse(result);
             console.log('haHAA');
+
+            const validFunds = new Set();
+            if (!parsedResult.datatable || !parsedResult.datatable.data) return validFunds;
+            for (const fund of parsedResult.datatable.data) {
+              validFunds.add( fund['0'] );
+            }
+            return validFunds;
         })
         .catch(err => console.error(err));  // eslint-disable-line no-undef
 
@@ -196,7 +203,7 @@ exports.symbolSuggest = function symbolSuggest(query) {
 
       })
   .catch(err => console.error(err));  // eslint-disable-line no-undef
-};
+}
 
 function getStock2() {
   const url = 'https://www.quandl.com/api/v3/datasets/WIKI/AAPL.json?column_index=4&order=asc&collapse=annual&start_date=2012-01-01&end_date=2013-12-31&api_key=Gk76mE3xGFbNcozxcY6J';
