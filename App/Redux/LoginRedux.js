@@ -9,7 +9,7 @@ const { Types, Creators } = createActions({
   loginFailure: ['error'],
   logout: null,
   changeFund: ['fund'],
-  changeFundasdas1: (fund) => ({ type: 'CHANGE_FUND_1', total: fund })
+  changeFund2: ['fund'],
 })
 
 export const LoginTypes = Types
@@ -20,8 +20,8 @@ export const INITIAL_STATE = Immutable({
   username: null,
   error: null,
   fetching: false,
-  fund1: 'xD',
-  fund2: '',
+  fund1: 'AMD',
+  fund2: 'NVDA',
 })
 
 /* ------------- Reducers ------------- */
@@ -49,6 +49,7 @@ export const fund1 = (state = INITIAL_STATE, action) => {
   return { ...state, fund1: 'asdas' }
 } */
 export const fund = (state, { fund }) => state.merge({ fund1: fund })
+export const fund2 = (state, { fund }) => state.merge({ fund2: fund })
 
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -58,7 +59,8 @@ export const HANDLERS = {
                           [Types.LOGIN_SUCCESS]: success,
                           [Types.LOGIN_FAILURE]: failure,
                           [Types.LOGOUT]: logout,
-                          [Types.CHANGE_FUND]: fund
+                          [Types.CHANGE_FUND]: fund,
+                          [Types.CHANGE_FUND2]: fund2
                         }
 
 export const reducer = createReducer(INITIAL_STATE, HANDLERS)

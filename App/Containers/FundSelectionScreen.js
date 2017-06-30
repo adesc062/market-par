@@ -72,7 +72,7 @@ constructor(props) {
     this.state = {
       dataSource: new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 }),
       loaded: false,
-      text: props.fund1x,
+      text: props['fundx' + props.fundNumber],
       helpText: 'Type a company name or stock symbol.',
     };
     this.onFundSelection = this.onFundSelection.bind(this);
@@ -120,7 +120,10 @@ constructor(props) {
   }
 
   onFundSelection (symbol) {
-    this.props.changeFund1Dispatch(symbol);
+    if (this.props.fundNumber === 1)
+      this.props.changeFund1Dispatch(symbol);
+    else
+      this.props.changeFund2Dispatch(symbol);
   }
 
   render () {
@@ -170,13 +173,15 @@ FundSelectionScreen.contextTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    fund1x: state.login.fund1
+    fundx1: state.login.fund1,
+    fundx2: state.login.fund2
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeFund1Dispatch: (fund) => dispatch(LoginActions.changeFund(fund))
+    changeFund1Dispatch: (fund) => dispatch(LoginActions.changeFund(fund)),
+    changeFund2Dispatch: (fund) => dispatch(LoginActions.changeFund2(fund))
   }
 }
 

@@ -91,12 +91,12 @@ class LoginScreen extends React.Component {
     NavigationActions.launchScreen();
   }
 
-    handleFundPress = () => {
+    handleFundPress = (fundNumber) => {
       // const { username, password } = this.state
       // this.isAttempting = true
       // attempt a login - a saga is listening to pick it up from here.
       // this.props.attemptLogin(username, password);
-      NavigationActions.fundSelectionScreen();
+      NavigationActions.fundSelectionScreen( {fundNumber} );
     }
 
   handleChangeUsername = (text) => {
@@ -117,7 +117,7 @@ class LoginScreen extends React.Component {
 
   render () {
     const { username, password, fund1, fund2 } = this.state
-    const { fetching, fund1x } = this.props
+    const { fetching, fund1x, fund2x } = this.props
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
@@ -143,7 +143,7 @@ class LoginScreen extends React.Component {
                 onChangeText={this.handleChangeFund1}
                 underlineColorAndroid='transparent'
                 onSubmitEditing={this.handlePressLogin}
-                onFocus={this.handleFundPress}
+                onFocus={() => {this.handleFundPress(1)}}
                 />
                 <Button onPress={this.handlePressLogin}>
                   <NBText>
@@ -158,7 +158,7 @@ class LoginScreen extends React.Component {
             <View style={{flex: 1, flexDirection: 'row'}}>
               <Input
                 ref={(ref) => this.fund2 = ref}
-                value={fund2}
+                value={fund2x}
                 editable={editable}
                 keyboardType='default'
                 returnKeyType='go'
@@ -166,7 +166,7 @@ class LoginScreen extends React.Component {
                 autoCorrect={false}
                 onChangeText={this.handleChangeFund2}
                 underlineColorAndroid='transparent'
-                onFocus={this.handlePressLogin}
+                onFocus={() => {this.handleFundPress(2)}}
                 />
                 <Button onPress={this.handlePressLogin}>
                   <NBText>
@@ -194,14 +194,16 @@ class LoginScreen extends React.Component {
 const mapStateToProps = (state) => {
   return {
     fetching: state.login.fetching,
-    fund1x: state.login.fund1
+    fund1x: state.login.fund1,
+    fund2x: state.login.fund2
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password)),
-    changeFund1Dispatch: (fund) => dispatch(LoginActions.changeFund(fund))
+    changeFund1Dispatch: (fund) => dispatch(LoginActions.changeFund(fund)),
+    changeFund2Dispatch: (fund) => dispatch(LoginActions.changeFund2(fund))
   }
 }
 
