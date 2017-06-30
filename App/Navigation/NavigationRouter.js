@@ -9,6 +9,7 @@ import FundSelectionScreen from '../Containers/FundSelectionScreen'
 import ListviewExample from '../Containers/ListviewExample'
 import CardExample from '../Containers/CardExample'
 import Login from '../Containers/LoginScreen'
+import ResultScreen from '../Containers/ResultScreen'
 
 
 /* **************************
@@ -25,6 +26,7 @@ class NavigationRouter extends Component {
           <Scene key='listViewExample' component={ListviewExample}/>
           <Scene key='cardExample' component={CardExample}/>
           <Scene key='fundSelectionScreen' component={FundSelectionScreen} title='Fund Selection Screen'/>
+          <Scene key='resultScreen' component={ResultScreen} title='Result Screen'/>
         </Scene>
       </Router>
     )

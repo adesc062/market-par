@@ -221,6 +221,34 @@ function doAjax() {
     });
 }
 
+exports.getResults = function getResults(year, fund1, fund2) {
+    const results = {
+        outcome: 'loss',
+        fund1Change: 0.7,
+        fund2Change: 1.2,
+        userChange: 0.95,
+        marketChange: 1.1
+    };
+
+    const start = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?';
+    const dateGTE = 'date.gte=' + year + '0101';
+    const dateLT = '&date.lt=' + year + '1230';
+    const tickerPart = '&ticker=';
+    const symbolsPart = fund1 + ',' + fund2;
+    const apiKey = '&api_key=Gk76mE3xGFbNcozxcY6J';
+
+    const url = start + dateGTE + dateLT + tickerPart + symbolsPart + apiKey;
+    return fetch(url)
+        .then(response => response.text())
+        .then((result) => {
+            const parsedResult = JSON.parse(result);
+            console.log('haHAA');
+
+            return results;
+        })
+        .catch(err => console.error(err));
+}
+
 /*
 exports.symbolSuggest = function symbolSuggest(query) {
   const url = `http://d.yimg.com/aq/autoc?query=${query}&region=US&lang=en-US&callback=YAHOO.util.ScriptNodeDataSource.callbacks`;

@@ -16,6 +16,7 @@ import {Images, Metrics} from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Button, Text as NBText, Contant, Form, Item, Input, Label } from 'native-base'
+import finance from '../Utils/finance';
 
 class LoginScreen extends React.Component {
 
@@ -84,11 +85,20 @@ class LoginScreen extends React.Component {
   }
 
   handlePressLogin = () => {
-    const { username, password } = this.state
+    //const { username, password } = this.state
     //this.isAttempting = true
     // attempt a login - a saga is listening to pick it up from here.
     //this.props.attemptLogin(username, password);
-    NavigationActions.launchScreen();
+    //NavigationActions.resultScreen();
+    this.props.finishRequestStartDispatch();
+    return finance.getResults(2000, 'AAPL', 'MSFT')
+    .then((results) => {
+                console.log('haHAA');
+                this.props.finishRequestEndDispatch();
+                NavigationActions.resultScreen(results);
+    })
+    .catch(err => console.error(err));
+
   }
 
     handleFundPress = (fundNumber) => {
@@ -117,7 +127,7 @@ class LoginScreen extends React.Component {
 
   render () {
     const { username, password, fund1, fund2 } = this.state
-    const { fetching, fund1x, fund2x } = this.props
+    const { year, fetching, fund1x, fund2x } = this.props
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
@@ -125,7 +135,7 @@ class LoginScreen extends React.Component {
        <View style={Styles.form}>
        <View style={{flex: 1, alignItems: 'center'}}>
                <NBText>
-                 Year: 1990
+                 Year: {year}
                </NBText>
            </View>
         <Form>
@@ -177,7 +187,7 @@ class LoginScreen extends React.Component {
           </Item>
         </Form>
           <View style={[Styles.loginRow]}>
-            <Button style={{flex: 1, justifyContent: 'center'}} full onPress={this.handlePressLogin}>
+            <Button style={{flex: 1, justifyContent: 'center'}} full onPress={this.handlePressLogin} disabled={fetching} >
               <NBText>
                 Finish
               </NBText>
@@ -193,6 +203,7 @@ class LoginScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    year: state.login.year,
     fetching: state.login.fetching,
     fund1x: state.login.fund1,
     fund2x: state.login.fund2
@@ -203,7 +214,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password)),
     changeFund1Dispatch: (fund) => dispatch(LoginActions.changeFund(fund)),
-    changeFund2Dispatch: (fund) => dispatch(LoginActions.changeFund2(fund))
+    changeFund2Dispatch: (fund) => dispatch(LoginActions.changeFund2(fund)),
+    finishRequestStartDispatch: (fund) => dispatch(LoginActions.finishRequestStart()),
+    finishRequestEndDispatch: (fund) => dispatch(LoginActions.finishRequestEnd())
   }
 }
 

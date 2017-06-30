@@ -1,7 +1,15 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
+import finance from '../Utils/finance';
 
 /* ------------- Types and Action Creators ------------- */
+
+const finishRequestFunction = () => {
+  return (dispatch, getState) => {
+    dispatch(finishRequestStart());
+    return finance.getResults(2000, 'AAPL', 'MSFT');
+  }
+}
 
 const { Types, Creators } = createActions({
   loginRequest: ['username', 'password'],
@@ -10,6 +18,9 @@ const { Types, Creators } = createActions({
   logout: null,
   changeFund: ['fund'],
   changeFund2: ['fund'],
+  finishRequest: finishRequestFunction,
+  finishRequestStart: null,
+  finishRequestEnd: null
 })
 
 export const LoginTypes = Types
@@ -20,6 +31,7 @@ export const INITIAL_STATE = Immutable({
   username: null,
   error: null,
   fetching: false,
+  year: 2000,
   fund1: 'AMD',
   fund2: 'NVDA',
 })
@@ -27,7 +39,7 @@ export const INITIAL_STATE = Immutable({
 /* ------------- Reducers ------------- */
 
 // we're attempting to login
-export const request = (state) => state.merge({ fetching: true })
+//export const request = (state) => state.merge({ fetching: true })
 
 // we've successfully logged in
 export const success = (state, { username }) =>
@@ -50,7 +62,8 @@ export const fund1 = (state = INITIAL_STATE, action) => {
 } */
 export const fund = (state, { fund }) => state.merge({ fund1: fund })
 export const fund2 = (state, { fund }) => state.merge({ fund2: fund })
-
+export const request = (state) => state.merge({ fetching: true })
+export const requestEnd = (state) => state.merge({ fetching: false })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -60,7 +73,9 @@ export const HANDLERS = {
                           [Types.LOGIN_FAILURE]: failure,
                           [Types.LOGOUT]: logout,
                           [Types.CHANGE_FUND]: fund,
-                          [Types.CHANGE_FUND2]: fund2
+                          [Types.CHANGE_FUND2]: fund2,
+                          [Types.FINISH_REQUEST_START]: request,
+                          [Types.FINISH_REQUEST_END]: requestEnd,
                         }
 
 export const reducer = createReducer(INITIAL_STATE, HANDLERS)
