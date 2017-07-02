@@ -30,15 +30,24 @@ const styles = StyleSheet.create({
   symbol: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'space-between'
   },
   symbolText: {
     fontSize: 15,
     color: 'black',
+    marginLeft: 15,
     marginTop: 10,
     marginRight: 10,
     textAlign: 'center'
   },
+  companyText: {
+      fontSize: 15,
+      color: 'black',
+      marginRight: 15,
+      marginTop: 10,
+      marginRight: 10,
+      textAlign: 'center'
+    },
   marketText: {
     fontSize: 15,
     color: '#A6A6A6',
@@ -76,6 +85,9 @@ export default class StockCell extends React.Component {
             <View style={styles.symbol}>
               <Text style={styles.symbolText}>
                 {this.props.stock.symbol}
+              </Text>
+              <Text style={styles.companyText}>
+                {this.props.stock.company}
               </Text>
             </View>
           </View>

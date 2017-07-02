@@ -127,7 +127,7 @@ exports.getNews = function getNews(symbol) {
     .catch(err => console.error(err));
 };
 
-exports.symbolSuggest = function symbolSuggest(query) {
+exports.symbolSuggest = function symbolSuggest(query, year) {
   const url = `http://d.yimg.com/aq/autoc?query=${query}&region=US&lang=en-US&callback=YAHOO.util.ScriptNodeDataSource.callbacks`;
   console.log(url);
   const that = this;
@@ -141,8 +141,8 @@ exports.symbolSuggest = function symbolSuggest(query) {
         const symbols = parsed.ResultSet.Result.map(function(entry) {return entry.symbol;});
 
         const start = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?';
-        const dateGTE = 'date.gte=20150101';
-        const dateLT = '&date.lt=20150130';
+        const dateGTE = 'date.gte=' + year + '0101';
+        const dateLT = '&date.lt=' + year + '0130';
         const tickerPart = '&ticker=';
         const symbolsPart = symbols.join(",");
         const apiKey = '&api_key=Gk76mE3xGFbNcozxcY6J';
@@ -222,7 +222,7 @@ function doAjax() {
 }
 
 exports.getResults = function getResults(year, fund1, fund2) {
-    const results = {
+    const results2 = {
         outcome: 'loss',
         fund1Change: 0.7,
         fund2Change: 1.2,
@@ -242,17 +242,75 @@ exports.getResults = function getResults(year, fund1, fund2) {
         .then(response => response.text())
         .then((result) => {
             const parsedResult = JSON.parse(result);
+            const data = parsedResult.datatable.data;
             console.log('haHAA');
-
+            let start1 = 1;
+            let end1 = 1;
+            let start2 = 1;
+            let end2 = 1;
+            start1 = data[0]['5'];
+            for (let i = 0; i < data.length; i++) {
+              if(data[i]['0'] === fund2) {
+                end1 = data[i - 1]['5'];
+                start2 = data[i]['5'];
+                break;
+              }
+            }
+            end2 = data[data.length - 1]['5'];
+            const fund1Change = end1 / start1;
+            const fund2Change = end2 / start2
+            const userChange = (fund1Change + fund2Change) / 2;
+            const marketChange = marketData['year' + (year + 1)] / marketData['year' + year];
+            let outcome = 'tie';
+            if (userChange > marketChange) {
+              outcome = 'win';
+            }
+            else if (userChange < marketChange) {
+              outcome = 'loss';
+            }
+            const results = {outcome, fund1Change, fund2Change, userChange, marketChange};
             return results;
         })
         .catch(err => console.error(err));
 }
 
-/*
-exports.symbolSuggest = function symbolSuggest(query) {
-  const url = `http://d.yimg.com/aq/autoc?query=${query}&region=US&lang=en-US&callback=YAHOO.util.ScriptNodeDataSource.callbacks`;
-  console.log(url);
-  return fetch(url).catch(err => console.error(err));  // eslint-disable-line no-undef
-
-}; */
+// Data source: https://wilshire.com/indexcalculator/
+const marketData = {
+  year1980: 1.9,
+  year1981: 2.54,
+  year1982: 2.44,
+  year1983: 2.9,
+  year1984: 3.58,
+  year1985: 2.69,
+  year1986: 4.89,
+  year1987: 5.67,
+  year1988: 5.8,
+  year1989: 6.84,
+  year1900: 8.84,
+  year1991: 8.29,
+  year1992: 11.13,
+  year1993: 12.13,
+  year1994: 13.5,
+  year1995: 13.49,
+  year1996: 18.4,
+  year1997: 22.31,
+  year1998: 29.29,
+  year1999: 37.37,
+  year2000: 44.67,
+  year2001: 38.46,
+  year2002: 35.58,
+  year2003: 28.91,
+  year2004: 36.84,
+  year2005: 41.58,
+  year2006: 44.20,
+  year2007: 51.19,
+  year2008: 53.41,
+  year2009: 34.98,
+  year2010: 44.86,
+  year2011: 51.77,
+  year2012: 52.08,
+  year2013: 61.96,
+  year2014: 80.38,
+  year2015: 90.81,
+  year2016: 89.23
+};

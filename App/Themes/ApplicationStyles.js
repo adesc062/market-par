@@ -21,8 +21,16 @@ const ApplicationStyles = {
     container: {
       flex: 1,
       paddingTop: Metrics.baseMargin,
-      backgroundColor: Colors.transparent
-    },
+      backgroundColor: Colors.darkPrimary
+     },
+     subContainer: {
+          flex: 1,
+          padding: Metrics.baseMargin,
+          backgroundColor: Colors.snow,
+        margin: 20,
+        borderRadius: 5
+
+     },
     section: {
       margin: Metrics.section,
       padding: Metrics.baseMargin

@@ -5,19 +5,20 @@ import { Images } from '../Themes'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import finance from '../Utils/finance';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import StockCell from './FundSelectionComponents/StockCell';
+import StockCell from './FundSuggestionComponents/StockCell';
 import { connect } from 'react-redux'
 import LoginActions from '../Redux/LoginRedux'
 
 // Styles
   import styles from './Styles/FundSelectionScreenStyles'
 
-class FundSelectionScreen extends React.Component {
+class FundSuggestionScreen extends React.Component {
 constructor(props) {
     super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
-      dataSource: new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 }),
+      dataSource: ds.cloneWithRows([{symbol: 'AAPL', company: 'Apple Inc.'}, {symbol: 'MSFT', company: 'Microsoft Corporation'}, {symbol: 'DIS', company: 'The Walt Disney Company'}]),
       loaded: false,
       text: props['fundx' + props.fundNumber],
       helpText: 'Type a company name or stock symbol.',
@@ -59,29 +60,9 @@ constructor(props) {
   render () {
     return (
        <View style={styles.container}>
-              <Text style={styles.helpText}>
-                {this.state.helpText}
+              <Text style={[styles.helpText, {marginBottom: 30}]}>
+                Select one symbol
               </Text>
-            <View style={styles.triContainer}>
-              <View style={styles.leftContainer}>
-                                  <Icon style={styles.searchIcon} name="search" size={20} color="white" />
-
-              </View>
-              <View style={styles.innerContainer}>
-              <TextInput
-                                  style={styles.searchBarInput}
-                                  autoCapitalize={'characters'}
-                                  autoFocus={true}
-                                  placeholder="Search ticker symbols"
-                                  placeholderTextColor="lightgrey"
-                                  onChangeText={text => this.onTyping({ text })}
-                                  value={this.state.text}
-                                />
-                                </View>
-              <View style={styles.rightContainer}>
-                <Icon style={{marginRight: 15}} name="cancel" size={35} color="white" onPress={() => {this.setModalVisible(!this.state.modalVisible)}}/>
-              </View>
-            </View>
               <View style={styles.suggestion}>
                 <ListView
                   dataSource={this.state.dataSource}
@@ -93,7 +74,7 @@ constructor(props) {
   }
 }
 
-FundSelectionScreen.contextTypes = {
+FundSuggestionScreen.contextTypes = {
   drawer: React.PropTypes.object
 }
 
@@ -112,4 +93,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FundSelectionScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(FundSuggestionScreen)

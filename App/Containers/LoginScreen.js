@@ -18,6 +18,9 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Button, Text as NBText, Contant, Form, Item, Input, Label } from 'native-base'
 import finance from '../Utils/finance';
 
+import styles from './Styles/PlayScreenStyles'
+
+
 class LoginScreen extends React.Component {
 
   static propTypes = {
@@ -76,7 +79,6 @@ class LoginScreen extends React.Component {
   }
 
   keyboardDidHide = (e) => {
-    // Animation types easeInEaseOut/linear/spring
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     this.setState({
       visibleHeight: Metrics.screenHeight,
@@ -85,13 +87,8 @@ class LoginScreen extends React.Component {
   }
 
   handlePressLogin = () => {
-    //const { username, password } = this.state
-    //this.isAttempting = true
-    // attempt a login - a saga is listening to pick it up from here.
-    //this.props.attemptLogin(username, password);
-    //NavigationActions.resultScreen();
     this.props.finishRequestStartDispatch();
-    return finance.getResults(2000, 'AAPL', 'MSFT')
+    return finance.getResults(this.props.year, this.props.fund1x, this.props.fund2x)
     .then((results) => {
                 console.log('haHAA');
                 this.props.finishRequestEndDispatch();
@@ -102,11 +99,11 @@ class LoginScreen extends React.Component {
   }
 
     handleFundPress = (fundNumber) => {
-      // const { username, password } = this.state
-      // this.isAttempting = true
-      // attempt a login - a saga is listening to pick it up from here.
-      // this.props.attemptLogin(username, password);
       NavigationActions.fundSelectionScreen( {fundNumber} );
+    }
+
+    handleFundSuggestionPress = () => {
+      NavigationActions.fundSuggestionScreen();
     }
 
   handleChangeUsername = (text) => {
@@ -131,17 +128,19 @@ class LoginScreen extends React.Component {
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
-      <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[Styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
-       <View style={Styles.form}>
-       <View style={{flex: 1, alignItems: 'center'}}>
-               <NBText>
-                 Year: {year}
-               </NBText>
-           </View>
+    <View style={styles.mainContainer}>
+      <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
+       <View style={styles.container}>
+       <View style={styles.subContainer}>
+        <View style={{flex: 1, alignItems: 'center'}}>
+          <NBText style={{fontSize: 25, marginBottom: 30}}>
+            Year — {year}
+          </NBText>
+         </View>
         <Form>
-          <Item stackedLabel>
+          <Item stackedLabel style={{marginBottom: 30}}>
             <Label>Fund #1</Label>
-            <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{flex: 1, flexDirection: 'row', marginBottom: 5}}>
               <Input
                 ref={(ref) => this.fund1 = ref}
                 value={fund1x}
@@ -154,8 +153,9 @@ class LoginScreen extends React.Component {
                 underlineColorAndroid='transparent'
                 onSubmitEditing={this.handlePressLogin}
                 onFocus={() => {this.handleFundPress(1)}}
+                placeholder='Select fund'
                 />
-                <Button onPress={this.handlePressLogin}>
+                <Button transparent style={{marginRight: 10}} onPress={this.handleFundSuggestionPress}>
                   <NBText>
                     Suggest
                   </NBText>
@@ -163,9 +163,9 @@ class LoginScreen extends React.Component {
             </View>
 
           </Item>
-          <Item stackedLabel>
+          <Item stackedLabel style={{marginBottom: 30}}>
             <Label>Fund #2</Label>
-            <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{flex: 1, flexDirection: 'row', marginBottom: 5}}>
               <Input
                 ref={(ref) => this.fund2 = ref}
                 value={fund2x}
@@ -177,8 +177,9 @@ class LoginScreen extends React.Component {
                 onChangeText={this.handleChangeFund2}
                 underlineColorAndroid='transparent'
                 onFocus={() => {this.handleFundPress(2)}}
+                placeholder='Select fund'
                 />
-                <Button onPress={this.handlePressLogin}>
+                <Button transparent style={{marginRight: 10}} onPress={this.handleFundSuggestionPress}>
                   <NBText>
                     Suggest
                   </NBText>
@@ -187,15 +188,16 @@ class LoginScreen extends React.Component {
           </Item>
         </Form>
           <View style={[Styles.loginRow]}>
-            <Button style={{flex: 1, justifyContent: 'center'}} full onPress={this.handlePressLogin} disabled={fetching} >
+            <Button rounded style={{flex: 1, justifyContent: 'center'}} block onPress={this.handlePressLogin} disabled={fetching} >
               <NBText>
                 Finish
               </NBText>
             </Button>
           </View>
         </View>
-
+        </View>
       </ScrollView>
+      </View>
     )
   }
 

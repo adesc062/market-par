@@ -11,7 +11,8 @@ export default StyleSheet.create({
   },
   helpText: {
     color: 'white',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginBottom: 30
   },
   centered: {
     alignItems: 'center'
