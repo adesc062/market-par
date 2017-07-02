@@ -10,32 +10,30 @@ import Tabs from 'react-native-tabs';
 
 // Styles
 import styles from './Styles/StatisticsScreenStyles'
-
+const lorem = 'Lorem ipsum dolor sit amet, sed ex quot antiopam postulant. Usu veri copiosae hendrerit at, est bonorum labores et. Sed at adolescens accommodare, qui laudem everti at, in nam nonumy evertitur.gere populo ad, est ut inani homero graeci. At hinc prodesset vituperatoribus mel, eos option corpora neglegentur cu.';
 class StatisticsScreen extends React.Component {
 constructor(props){
     super(props);
-    this.state = {page: 'help'};
+    this.state = {page: 'info'};
   }
 
   getTab() {
     switch (this.state.page) {
       case 'help':
-        return <Text style={styles.text}>
-                             Welcome to React Native
-                         </Text>;
+        return <View><Text style={styles.title}>Help</Text><Text style={styles.text}>{lorem}</Text></View>;
       case 'info':
-      return <View><Text style={styles.title}>
-                                   Information about MarketPar
-                               </Text></View>;
+        return <View><Text style={styles.title}>Information about MarketPar</Text><Text style={styles.text}>{lorem}</Text></View>;
       case 'statistics':
-      return <Text style={styles.text}>
-                                   Welcome to React Native
-                               </Text>;
+      return <View>
+               <Text style={styles.title}>Statistics</Text>
+               <Text style={styles.text}>Games: played: 25</Text>
+               <Text style={styles.text}>Games: won: 10</Text>
+               <Text style={styles.text}>Games: lost: 15</Text>
+               <Text style={styles.text}>Win percentage: 40%</Text>
+               <Text style={styles.text}>Most picked fund: AAPL</Text>
+             </View>;
       default :
-      return <Text style={styles.text}>
-                                   Welcome to React Native
-                               </Text>;
-
+        return <View><Text style={styles.title}>Information about MarketPar</Text><Text style={styles.text}>{lorem}</Text></View>;
     }
   }
 

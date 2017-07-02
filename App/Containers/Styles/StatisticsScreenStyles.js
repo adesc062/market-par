@@ -15,10 +15,13 @@ export default StyleSheet.create({
   },
   title: {
       color: 'white',
-      fontSize: 40,
+      fontSize: 25,
+      marginBottom: 5,
       textAlign: 'center'
     },
   text: {
-    color: 'white'
+    color: 'white',
+    margin: 15,
+    fontSize: 16,
   }
 })
