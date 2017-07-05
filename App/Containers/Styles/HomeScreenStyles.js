@@ -16,24 +16,24 @@ export default StyleSheet.create({
   modelView: {
     justifyContent: 'center'
   },
-    triContainer: {
-      height: 60,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    leftContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-    },
-    rightContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-    },
-    rightIcon: {
-      resizeMode: 'contain',
-    }
+  triContainer: {
+    height: 60,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  leftContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  rightContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  rightIcon: {
+    resizeMode: 'contain'
+  }
 })

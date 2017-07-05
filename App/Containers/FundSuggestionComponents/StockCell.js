@@ -1,16 +1,16 @@
-import React from 'react';
+import React from 'react'
 import {
   StyleSheet,
   Text,
   TouchableHighlight,
-  View,
-} from 'react-native';
+  View
+} from 'react-native'
 
 // 3rd party libraries
-import { Actions } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux'
 
 // Flux
-//import StockActions from '../../../actions/stock-action';
+// import StockActions from '../../../actions/stock-action';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   stock: {
     flex: 8,
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   symbol: {
     flex: 1,
@@ -41,23 +41,23 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   companyText: {
-      fontSize: 15,
-      color: 'black',
-      marginRight: 15,
-      marginTop: 10,
-      marginRight: 10,
-      textAlign: 'center'
-    },
+    fontSize: 15,
+    color: 'black',
+    marginRight: 15,
+    marginTop: 10,
+    marginRight: 10,
+    textAlign: 'center'
+  },
   marketText: {
     fontSize: 15,
     color: '#A6A6A6',
     textAlign: 'left',
     marginTop: 10,
     marginBottom: 5,
-    marginRight: 10,
+    marginRight: 10
   },
   name: {
-    flex: 1,
+    flex: 1
   },
   nameText: {
     fontSize: 10,
@@ -65,21 +65,21 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     marginTop: 5,
     marginBottom: 5,
-    marginRight: 10,
-  },
-});
+    marginRight: 10
+  }
+})
 
 export default class StockCell extends React.Component {
-  onPressAdd(symbol) {
-    this.props.onFundSelection(symbol);
-    console.log('_onPressAdd', symbol);
-    //StockActions.addStock(symbol);
-    Actions.pop();
+  onPressAdd (symbol) {
+    this.props.onFundSelection(symbol)
+    console.log('_onPressAdd', symbol)
+    // StockActions.addStock(symbol);
+    Actions.pop()
   }
 
-  render() {
+  render () {
     return (
-      <TouchableHighlight onPress={() => this.onPressAdd(this.props.stock.symbol)} underlayColor="#202020">
+      <TouchableHighlight onPress={() => this.onPressAdd(this.props.stock.symbol)} underlayColor='#202020'>
         <View style={styles.container}>
           <View style={styles.stock}>
             <View style={styles.symbol}>
@@ -93,7 +93,7 @@ export default class StockCell extends React.Component {
           </View>
         </View>
       </TouchableHighlight>
-    );
+    )
   }
 }
 
@@ -101,10 +101,10 @@ StockCell.propTypes = {
   stock: React.PropTypes.shape({
     symbol: React.PropTypes.string,
     exchDisp: React.PropTypes.string,
-    name: React.PropTypes.string,
-  }),
-};
+    name: React.PropTypes.string
+  })
+}
 
 StockCell.defaultProps = {
-  stock: {},
-};
+  stock: {}
+}

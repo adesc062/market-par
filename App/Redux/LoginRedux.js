@@ -1,13 +1,13 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import finance from '../Utils/finance';
+import finance from '../Utils/finance'
 
 /* ------------- Types and Action Creators ------------- */
 
 const finishRequestFunction = () => {
   return (dispatch, getState) => {
-    dispatch(finishRequestStart());
-    return finance.getResults(2000, 'AAPL', 'MSFT');
+    dispatch(finishRequestStart())
+    return finance.getResults(2000, 'AAPL', 'MSFT')
   }
 }
 
@@ -35,13 +35,13 @@ export const INITIAL_STATE = Immutable({
   fetching: false,
   year: 2000,
   fund1: 'AAPL',
-  fund2: 'MSFT',
+  fund2: 'MSFT'
 })
 
 /* ------------- Reducers ------------- */
 
 // we're attempting to login
-//export const request = (state) => state.merge({ fetching: true })
+// export const request = (state) => state.merge({ fetching: true })
 
 // we've successfully logged in
 export const success = (state, { username }) =>
@@ -55,7 +55,7 @@ export const failure = (state, { error }) =>
 export const logout = (state) => INITIAL_STATE
 
 // changing fund1
-//export const fund1 = (state, action) =>
+// export const fund1 = (state, action) =>
  // state.merge({ fund1: 'sdsa' })
 
 /*
@@ -69,27 +69,27 @@ export const requestEnd = (state) => state.merge({ fetching: false })
 export const year = (state, action) => {
   switch (action.type) {
     case 'RANDOMIZE_YEAR':
-      return state.merge({year: Math.floor(Math.random() * (2015 - 1980 + 1) + 1980)});
+      return state.merge({year: Math.floor(Math.random() * (2015 - 1980 + 1) + 1980)})
     case 'SELECT_YEAR':
-      return state.merge({year: action.year});
+      return state.merge({year: action.year})
     default:
-      return state;
+      return state
   }
 }
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const HANDLERS = {
-                          [Types.LOGIN_REQUEST]: request,
-                          [Types.LOGIN_SUCCESS]: success,
-                          [Types.LOGIN_FAILURE]: failure,
-                          [Types.LOGOUT]: logout,
-                          [Types.CHANGE_FUND]: fund,
-                          [Types.CHANGE_FUND2]: fund2,
-                          [Types.FINISH_REQUEST_START]: request,
-                          [Types.FINISH_REQUEST_END]: requestEnd,
-                          [Types.RANDOMIZE_YEAR]: year,
-                          [Types.SELECT_YEAR]: year
-                        }
+  [Types.LOGIN_REQUEST]: request,
+  [Types.LOGIN_SUCCESS]: success,
+  [Types.LOGIN_FAILURE]: failure,
+  [Types.LOGOUT]: logout,
+  [Types.CHANGE_FUND]: fund,
+  [Types.CHANGE_FUND2]: fund2,
+  [Types.FINISH_REQUEST_START]: request,
+  [Types.FINISH_REQUEST_END]: requestEnd,
+  [Types.RANDOMIZE_YEAR]: year,
+  [Types.SELECT_YEAR]: year
+}
 
 export const reducer = createReducer(INITIAL_STATE, HANDLERS)
 

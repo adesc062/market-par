@@ -16,10 +16,9 @@ import {Images, Metrics} from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Button, Text as NBText, Contant, Form, Item, Input, Label } from 'native-base'
-import finance from '../Utils/finance';
+import finance from '../Utils/finance'
 
 import styles from './Styles/PlayScreenStyles'
-
 
 class LoginScreen extends React.Component {
 
@@ -42,10 +41,10 @@ class LoginScreen extends React.Component {
       fund1: 'AAPL',
       fund2: 'MSFT',
       visibleHeight: Metrics.screenHeight,
-      topLogo: { width: Metrics.screenWidth-40 }
+      topLogo: { width: Metrics.screenWidth - 40 }
     }
     this.isAttempting = false
-    this.handleChangeFund1 = this.handleChangeFund1.bind(this);
+    this.handleChangeFund1 = this.handleChangeFund1.bind(this)
   }
 
   componentWillReceiveProps (newProps) {
@@ -82,29 +81,28 @@ class LoginScreen extends React.Component {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     this.setState({
       visibleHeight: Metrics.screenHeight,
-      topLogo: {width: Metrics.screenWidth-40}
+      topLogo: {width: Metrics.screenWidth - 40}
     })
   }
 
   handlePressLogin = () => {
-    this.props.finishRequestStartDispatch();
+    this.props.finishRequestStartDispatch()
     return finance.getResults(this.props.year, this.props.fund1x, this.props.fund2x)
     .then((results) => {
-                console.log('haHAA');
-                this.props.finishRequestEndDispatch();
-                NavigationActions.resultScreen(results);
+      console.log('haHAA')
+      this.props.finishRequestEndDispatch()
+      NavigationActions.resultScreen(results)
     })
-    .catch(err => console.error(err));
-
+    .catch(err => console.error(err))
   }
 
-    handleFundPress = (fundNumber) => {
-      NavigationActions.fundSelectionScreen( {fundNumber} );
-    }
+  handleFundPress = (fundNumber) => {
+    NavigationActions.fundSelectionScreen({fundNumber})
+  }
 
-    handleFundSuggestionPress = () => {
-      NavigationActions.fundSuggestionScreen();
-    }
+  handleFundSuggestionPress = () => {
+    NavigationActions.fundSuggestionScreen()
+  }
 
   handleChangeUsername = (text) => {
     this.setState({ username: text })
@@ -115,7 +113,7 @@ class LoginScreen extends React.Component {
   }
 
   handleChangeFund1 = (text) => {
-    this.props.changeFund1Dispatch(text);
+    this.props.changeFund1Dispatch(text)
   }
 
   handleChangeFund2 = (text) => {
@@ -128,75 +126,75 @@ class LoginScreen extends React.Component {
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
     return (
-    <View style={styles.mainContainer}>
-      <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
-       <View style={styles.container}>
-       <View style={styles.subContainer}>
-        <View style={{flex: 1, alignItems: 'center'}}>
-          <NBText style={{fontSize: 25, marginBottom: 30}}>
+      <View style={styles.mainContainer}>
+        <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
+          <View style={styles.container}>
+            <View style={styles.subContainer}>
+              <View style={{flex: 1, alignItems: 'center'}}>
+                <NBText style={{fontSize: 25, marginBottom: 30}}>
             Year — {year}
-          </NBText>
-         </View>
-        <Form>
-          <Item stackedLabel style={{marginBottom: 30}}>
-            <Label>Fund #1</Label>
-            <View style={{flex: 1, flexDirection: 'row', marginBottom: 5}}>
-              <Input
-                ref={(ref) => this.fund1 = ref}
-                value={fund1x}
-                editable={editable}
-                keyboardType='default'
-                returnKeyType='go'
-                autoCapitalize='none'
-                autoCorrect={false}
-                onChangeText={this.handleChangeFund1}
-                underlineColorAndroid='transparent'
-                onSubmitEditing={this.handlePressLogin}
-                onFocus={() => {this.handleFundPress(1)}}
-                placeholder='Select fund'
+                </NBText>
+              </View>
+              <Form>
+                <Item stackedLabel style={{marginBottom: 30}}>
+                  <Label>Fund #1</Label>
+                  <View style={{flex: 1, flexDirection: 'row', marginBottom: 5}}>
+                    <Input
+                      ref={(ref) => this.fund1 = ref}
+                      value={fund1x}
+                      editable={editable}
+                      keyboardType='default'
+                      returnKeyType='go'
+                      autoCapitalize='none'
+                      autoCorrect={false}
+                      onChangeText={this.handleChangeFund1}
+                      underlineColorAndroid='transparent'
+                      onSubmitEditing={this.handlePressLogin}
+                      onFocus={() => { this.handleFundPress(1) }}
+                      placeholder='Select fund'
                 />
-                <Button transparent style={{marginRight: 10}} onPress={this.handleFundSuggestionPress}>
-                  <NBText>
+                    <Button transparent style={{marginRight: 10}} onPress={this.handleFundSuggestionPress}>
+                      <NBText>
                     Suggest
                   </NBText>
-                </Button>
-            </View>
+                    </Button>
+                  </View>
 
-          </Item>
-          <Item stackedLabel style={{marginBottom: 30}}>
-            <Label>Fund #2</Label>
-            <View style={{flex: 1, flexDirection: 'row', marginBottom: 5}}>
-              <Input
-                ref={(ref) => this.fund2 = ref}
-                value={fund2x}
-                editable={editable}
-                keyboardType='default'
-                returnKeyType='go'
-                autoCapitalize='none'
-                autoCorrect={false}
-                onChangeText={this.handleChangeFund2}
-                underlineColorAndroid='transparent'
-                onFocus={() => {this.handleFundPress(2)}}
-                placeholder='Select fund'
+                </Item>
+                <Item stackedLabel style={{marginBottom: 30}}>
+                  <Label>Fund #2</Label>
+                  <View style={{flex: 1, flexDirection: 'row', marginBottom: 5}}>
+                    <Input
+                      ref={(ref) => this.fund2 = ref}
+                      value={fund2x}
+                      editable={editable}
+                      keyboardType='default'
+                      returnKeyType='go'
+                      autoCapitalize='none'
+                      autoCorrect={false}
+                      onChangeText={this.handleChangeFund2}
+                      underlineColorAndroid='transparent'
+                      onFocus={() => { this.handleFundPress(2) }}
+                      placeholder='Select fund'
                 />
-                <Button transparent style={{marginRight: 10}} onPress={this.handleFundSuggestionPress}>
-                  <NBText>
+                    <Button transparent style={{marginRight: 10}} onPress={this.handleFundSuggestionPress}>
+                      <NBText>
                     Suggest
                   </NBText>
-                </Button>
-            </View>
-          </Item>
-        </Form>
-          <View style={[Styles.loginRow]}>
-            <Button rounded style={{flex: 1, justifyContent: 'center'}} block onPress={this.handlePressLogin} disabled={fetching} >
-              <NBText>
+                    </Button>
+                  </View>
+                </Item>
+              </Form>
+              <View style={[Styles.loginRow]}>
+                <Button rounded style={{flex: 1, justifyContent: 'center'}} block onPress={this.handlePressLogin} disabled={fetching} >
+                  <NBText>
                 Finish
               </NBText>
-            </Button>
+                </Button>
+              </View>
+            </View>
           </View>
-        </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
       </View>
     )
   }

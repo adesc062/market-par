@@ -14,7 +14,6 @@ import HomeScreen from '../Containers/HomeScreen'
 import FundSuggestionScreen from '../Containers/FundSuggestionScreen'
 import StatisticsScreen from '../Containers/StatisticsScreen'
 
-
 /* **************************
 * Documentation: https://github.com/aksonov/react-native-router-flux
 ***************************/
@@ -26,13 +25,13 @@ class NavigationRouter extends Component {
         <Scene key='drawer' component={NavigationDrawer} open={false}>
           <Scene key='loginScreen' component={Login} title='Login' />
           <Scene key='launchScreen' component={LaunchScreen} title='LaunchScreen' />
-          <Scene key='listViewExample' component={ListviewExample}/>
-          <Scene key='cardExample' component={CardExample}/>
-          <Scene key='fundSelectionScreen' component={FundSelectionScreen} title='Fund Selection Screen'/>
-          <Scene key='fundSuggestionScreen' component={FundSuggestionScreen} title='Fund Suggestion Screen'/>
-          <Scene key='resultScreen' component={ResultScreen} title='Result Screen'/>
-          <Scene initial key='homeScreen' component={HomeScreen} title='Home Screen'/>
-          <Scene key='statisticsScreen' component={StatisticsScreen} title='Statistics Screen'/>
+          <Scene key='listViewExample' component={ListviewExample} />
+          <Scene key='cardExample' component={CardExample} />
+          <Scene key='fundSelectionScreen' component={FundSelectionScreen} title='Fund Selection Screen' />
+          <Scene key='fundSuggestionScreen' component={FundSuggestionScreen} title='Fund Suggestion Screen' />
+          <Scene key='resultScreen' component={ResultScreen} title='Result Screen' />
+          <Scene initial key='homeScreen' component={HomeScreen} title='Home Screen' />
+          <Scene key='statisticsScreen' component={StatisticsScreen} title='Statistics Screen' />
         </Scene>
       </Router>
     )

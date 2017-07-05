@@ -22,36 +22,35 @@ export default StyleSheet.create({
   searchBarInput: {
     color: 'white',
     width: 200,
-        textAlign: 'center',
-        backgroundColor: '#FF9800',
-        borderRadius: 25
+    textAlign: 'center',
+    backgroundColor: '#FF9800',
+    borderRadius: 25
   },
   innerContainer: {
-    justifyContent: 'center',
-    textAlign: 'center'
+    justifyContent: 'center'
   },
   searchIcon: {
-  fontSize: 35,
-  marginLeft: 15
+    fontSize: 35,
+    marginLeft: 15
   },
   triContainer: {
-        height: 60,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      },
-      leftContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-      },
-      rightContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-      },
-      rightIcon: {
-        resizeMode: 'contain',
-      }
+    height: 60,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  leftContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  rightContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  rightIcon: {
+    resizeMode: 'contain'
+  }
 })

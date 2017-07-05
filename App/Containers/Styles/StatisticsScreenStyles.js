@@ -14,14 +14,14 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   title: {
-      color: 'white',
-      fontSize: 25,
-      marginBottom: 5,
-      textAlign: 'center'
-    },
+    color: 'white',
+    fontSize: 25,
+    marginBottom: 5,
+    textAlign: 'center'
+  },
   text: {
     color: 'white',
     margin: 15,
-    fontSize: 16,
+    fontSize: 16
   }
 })

@@ -22,15 +22,15 @@ const ApplicationStyles = {
       flex: 1,
       paddingTop: Metrics.baseMargin,
       backgroundColor: Colors.darkPrimary
-     },
-     subContainer: {
-          flex: 1,
-          padding: Metrics.baseMargin,
-          backgroundColor: Colors.snow,
-        margin: 20,
-        borderRadius: 5
+    },
+    subContainer: {
+      flex: 1,
+      padding: Metrics.baseMargin,
+      backgroundColor: Colors.snow,
+      margin: 20,
+      borderRadius: 5
 
-     },
+    },
     section: {
       margin: Metrics.section,
       padding: Metrics.baseMargin

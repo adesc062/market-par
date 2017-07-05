@@ -12,42 +12,37 @@ import styles from './Styles/ResultScreenStyles'
 class ResultScreen extends React.Component {
 
   handlePressRandomYear = () => {
-    this.props.randomizeYear();
-    NavigationActions.pop();
-    NavigationActions.loginScreen();
+    this.props.randomizeYear()
+    NavigationActions.pop()
+    NavigationActions.loginScreen()
   }
 
-  getMessage(symbol, change) {
-    let message = '';
-      if (change < 1) {
-        message = symbol + ' went down by ' + ((1 - change) * 100).toFixed(2) + '%';
-      }
-      else if (change > 1) {
-        message = symbol + ' went up by ' + ((change - 1) * 100).toFixed(2) + '%';
-      }
-      else {
-        message =  + ' did not change';
-      }
-      return message;
+  getMessage (symbol, change) {
+    let message = ''
+    if (change < 1) {
+      message = symbol + ' went down by ' + ((1 - change) * 100).toFixed(2) + '%'
+    } else if (change > 1) {
+      message = symbol + ' went up by ' + ((change - 1) * 100).toFixed(2) + '%'
+    } else {
+      message = +' did not change'
+    }
+    return message
   }
   render () {
-    const { outcome, year, fund1, fund2, fund1Change, fund2Change, userChange, marketChange } = this.props;
-    const message1 = this.getMessage(fund1, fund1Change);
-    const message2 = this.getMessage(fund2, fund2Change);
-    const messageUser = this.getMessage('Overall, you', userChange);
-    const messageMarket = this.getMessage('The market', marketChange);
-    let outcomeMessage = '';
+    const { outcome, year, fund1, fund2, fund1Change, fund2Change, userChange, marketChange } = this.props
+    const message1 = this.getMessage(fund1, fund1Change)
+    const message2 = this.getMessage(fund2, fund2Change)
+    const messageUser = this.getMessage('Overall, you', userChange)
+    const messageMarket = this.getMessage('The market', marketChange)
+    let outcomeMessage = ''
     if (outcome === 'win') {
-      outcomeMessage = 'Win';
-    }
-    else if (outcome === 'loss') {
-      outcomeMessage = 'Loss';
-    }
-    else if (outcome === 'tie') {
-      outcomeMessage = 'Tie';
-    }
-    else {
-      console.log('Invalid outcome');
+      outcomeMessage = 'Win'
+    } else if (outcome === 'loss') {
+      outcomeMessage = 'Loss'
+    } else if (outcome === 'tie') {
+      outcomeMessage = 'Tie'
+    } else {
+      console.log('Invalid outcome')
     }
     return (
       <View style={styles.mainContainer}>
@@ -57,27 +52,27 @@ class ResultScreen extends React.Component {
             <NBText style={{fontSize: 25, margin: 50, color: 'white'}}>
               Outcome — {outcomeMessage}
             </NBText>
-             <NBText style={{color: 'white', margin: 3}}>
-                  {message1}
-             </NBText>
-              <NBText style={{color: 'white', margin: 3}}>
-                  {message2}
-             </NBText>
-              <NBText style={{color: 'white', margin: 3}}>
-                  {messageUser}
-             </NBText>
-              <NBText style={{color: 'white', margin: 3, marginBottom: 80}}>
-                  {messageMarket}
-             </NBText>
+            <NBText style={{color: 'white', margin: 3}}>
+              {message1}
+            </NBText>
+            <NBText style={{color: 'white', margin: 3}}>
+              {message2}
+            </NBText>
+            <NBText style={{color: 'white', margin: 3}}>
+              {messageUser}
+            </NBText>
+            <NBText style={{color: 'white', margin: 3, marginBottom: 80}}>
+              {messageMarket}
+            </NBText>
           </View>
           <Button rounded style={{alignSelf: 'center'}} onPress={this.handlePressRandomYear} >
             <NBText>Random Year</NBText>
           </Button>
           <Button transparent style={{alignSelf: 'center'}} onPress={this.handlePressRandomYear}>
-              <NBText>Choose Year</NBText>
+            <NBText>Choose Year</NBText>
           </Button>
           <Button transparent style={{alignSelf: 'center'}} onPress={() => NavigationActions.homeScreen()}>
-              <NBText>Home</NBText>
+            <NBText>Home</NBText>
           </Button>
         </ScrollView>
       </View>
@@ -100,7 +95,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      randomizeYear: () => dispatch(LoginActions.randomizeYear()),
+    randomizeYear: () => dispatch(LoginActions.randomizeYear())
   }
 }
 
