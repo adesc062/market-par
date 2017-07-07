@@ -8,7 +8,8 @@ import {
   Image,
   Keyboard,
   LayoutAnimation,
-  Icon
+  Icon,
+  ActivityIndicator
 } from 'react-native'
 import { connect } from 'react-redux'
 import Styles from './Styles/LoginScreenStyles'
@@ -16,7 +17,7 @@ import {Images, Metrics} from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Button, Text as NBText, Contant, Form, Item, Input, Label } from 'native-base'
-import finance from '../Utils/finance'
+import Finance from '../Utils/Finance'
 
 import styles from './Styles/PlayScreenStyles'
 
@@ -87,7 +88,7 @@ class LoginScreen extends React.Component {
 
   handlePressLogin = () => {
     this.props.finishRequestStartDispatch()
-    return finance.getResults(this.props.year, this.props.fund1x, this.props.fund2x)
+    return Finance.getResults(this.props.year, this.props.fund1x, this.props.fund2x)
     .then((results) => {
       console.log('haHAA')
       this.props.finishRequestEndDispatch()
@@ -100,8 +101,8 @@ class LoginScreen extends React.Component {
     NavigationActions.fundSelectionScreen({fundNumber})
   }
 
-  handleFundSuggestionPress = () => {
-    NavigationActions.fundSuggestionScreen()
+  handleFundSuggestionPress = (fundNumber) => {
+    NavigationActions.fundSuggestionScreen({fundNumber, year: this.props.year})
   }
 
   handleChangeUsername = (text) => {
@@ -153,7 +154,7 @@ class LoginScreen extends React.Component {
                       onFocus={() => { this.handleFundPress(1) }}
                       placeholder='Select fund'
                 />
-                    <Button transparent style={{marginRight: 10}} onPress={this.handleFundSuggestionPress}>
+                    <Button transparent style={{marginRight: 10}} onPress={() => { this.handleFundSuggestionPress(1) }}>
                       <NBText>
                     Suggest
                   </NBText>
@@ -177,7 +178,7 @@ class LoginScreen extends React.Component {
                       onFocus={() => { this.handleFundPress(2) }}
                       placeholder='Select fund'
                 />
-                    <Button transparent style={{marginRight: 10}} onPress={this.handleFundSuggestionPress}>
+                    <Button transparent style={{marginRight: 10}} onPress={() => { this.handleFundSuggestionPress(2) }}>
                       <NBText>
                     Suggest
                   </NBText>
@@ -187,9 +188,7 @@ class LoginScreen extends React.Component {
               </Form>
               <View style={[Styles.loginRow]}>
                 <Button rounded style={{flex: 1, justifyContent: 'center'}} block onPress={this.handlePressLogin} disabled={fetching} >
-                  <NBText>
-                Finish
-              </NBText>
+                  {fetching ? <ActivityIndicator color='blue' /> : <NBText>Finish</NBText>}
                 </Button>
               </View>
             </View>

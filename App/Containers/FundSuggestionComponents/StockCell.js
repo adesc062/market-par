@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    height: 45,
+    height: 72,
     backgroundColor: 'white',
     borderBottomColor: 'black',
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     color: '#A6A6A6',
     textAlign: 'left',
     marginTop: 10,
-    marginBottom: 5,
+    marginBottom: 0,
     marginRight: 10
   },
   name: {
@@ -88,6 +88,14 @@ export default class StockCell extends React.Component {
               </Text>
               <Text style={styles.companyText}>
                 {this.props.stock.company}
+              </Text>
+            </View>
+            <View style={styles.symbol}>
+              <Text style={styles.symbolText}>
+            Last year return
+                          </Text>
+              <Text style={[styles.companyText, {color: this.props.stock.lastYearReturn > 100 ? 'green' : 'red'}]}>
+                {this.props.stock.lastYearReturn ? this.props.stock.lastYearReturn.toFixed(2) + '%' : 'Unavailable'}
               </Text>
             </View>
           </View>

@@ -7,6 +7,7 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import LoginActions from '../Redux/LoginRedux'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Tabs from 'react-native-tabs'
+import StorageHelper from '../Utils/StorageHelper'
 
 // Styles
 import styles from './Styles/StatisticsScreenStyles'
@@ -14,7 +15,23 @@ const lorem = 'Lorem ipsum dolor sit amet, sed ex quot antiopam postulant. Usu v
 class StatisticsScreen extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {page: 'info'}
+    this.state = {page: 'info', gamesPlayed: '...', gamesWon: '...', gamesLost: '...', winPercentage: '...'}
+  }
+
+  componentWillMount () {
+    StorageHelper.getPlayerStatistics()
+    .then(playerStatistics => {
+      const gamesPlayedNumber = parseInt(playerStatistics.gamesPlayed)
+      const gamesWonNumber = parseInt(playerStatistics.gamesWon)
+
+      this.setState({
+        gamesPlayed: playerStatistics.gamesPlayed,
+        gamesWon: playerStatistics.gamesWon,
+        gamesLost: gamesPlayedNumber - gamesWonNumber,
+        winPercentage: (gamesWonNumber / gamesPlayedNumber * 100).toFixed(2)
+      })
+    })
+    .catch(err => console.error(err))
   }
 
   getTab () {
@@ -26,10 +43,10 @@ class StatisticsScreen extends React.Component {
       case 'statistics':
         return <View>
           <Text style={styles.title}>Statistics</Text>
-          <Text style={styles.text}>Games: played: 25</Text>
-          <Text style={styles.text}>Games: won: 10</Text>
-          <Text style={styles.text}>Games: lost: 15</Text>
-          <Text style={styles.text}>Win percentage: 40%</Text>
+          <Text style={styles.text}>Games: played: {this.state.gamesPlayed}</Text>
+          <Text style={styles.text}>Games: won: {this.state.gamesWon} </Text>
+          <Text style={styles.text}>Games: lost: {this.state.gamesLost} </Text>
+          <Text style={styles.text}>Win percentage: {this.state.winPercentage}%</Text>
           <Text style={styles.text}>Most picked fund: AAPL</Text>
         </View>
       default :

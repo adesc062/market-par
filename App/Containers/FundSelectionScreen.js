@@ -3,7 +3,7 @@ import { ScrollView, Text, Image, View, StyleSheet, TextInput, TouchableHighligh
 import { Button, Text as NBText } from 'native-base'
 import { Images } from '../Themes'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-import finance from '../Utils/finance'
+import Finance from '../Utils/Finance'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import StockCell from './FundSelectionComponents/StockCell'
 import { connect } from 'react-redux'
@@ -32,14 +32,10 @@ class FundSelectionScreen extends React.Component {
     })
 
     const that = this
-    finance.symbolSuggest(text.text, this.props.year)
+    Finance.symbolSuggest(text.text, this.props.year)
     .then((result) => {
-      const dataSource = [];
-      for (let entry of result) {
-        dataSource.push({symbol: entry})
-      }
       that.setState({
-        dataSource: that.state.dataSource.cloneWithRows(dataSource),
+        dataSource: that.state.dataSource.cloneWithRows(result),
         loaded: true,
         helpText: 'Type a company name or stock symbol.'
       })
@@ -76,7 +72,7 @@ class FundSelectionScreen extends React.Component {
                                 />
           </View>
           <View style={styles.rightContainer}>
-            <Icon style={{marginRight: 15}} name='cancel' size={35} color='white' onPress={() => { this.setModalVisible(!this.state.modalVisible) }} />
+            <Icon style={{marginRight: 15}} name='cancel' size={35} color='white' onPress={() => { NavigationActions.pop() }} />
           </View>
         </View>
         <View style={styles.suggestion}>

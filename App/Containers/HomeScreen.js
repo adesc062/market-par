@@ -14,7 +14,6 @@ class HomeScreen extends React.Component {
 
   constructor () {
     super()
-    // const yearsX = {1980, 2015};
     const years = []
     for (let i = 1980; i < 2016; i++) {
       years.push(i)
@@ -39,6 +38,7 @@ class HomeScreen extends React.Component {
     this.props.selectYear(year)
     NavigationActions.loginScreen()
   }
+
   render () {
     return (
       <View style={styles.mainContainer}>
@@ -80,6 +80,7 @@ class HomeScreen extends React.Component {
             />
           </View>
         </Modal>
+
       </View>
     )
   }

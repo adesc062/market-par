@@ -1,13 +1,13 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-import finance from '../Utils/finance'
+import Finance from '../Utils/Finance'
 
 /* ------------- Types and Action Creators ------------- */
 
 const finishRequestFunction = () => {
   return (dispatch, getState) => {
     dispatch(finishRequestStart())
-    return finance.getResults(2000, 'AAPL', 'MSFT')
+    return Finance.getResults(2000, 'AAPL', 'MSFT')
   }
 }
 
@@ -54,14 +54,6 @@ export const failure = (state, { error }) =>
 // we've logged out
 export const logout = (state) => INITIAL_STATE
 
-// changing fund1
-// export const fund1 = (state, action) =>
- // state.merge({ fund1: 'sdsa' })
-
-/*
-export const fund1 = (state = INITIAL_STATE, action) => {
-  return { ...state, fund1: 'asdas' }
-} */
 export const fund = (state, { fund }) => state.merge({ fund1: fund })
 export const fund2 = (state, { fund }) => state.merge({ fund2: fund })
 export const request = (state) => state.merge({ fetching: true })

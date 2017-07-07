@@ -1,9 +1,9 @@
 import React from 'react'
-import { ScrollView, Text, Image, View, StyleSheet, TextInput, TouchableHighlight, ListView } from 'react-native'
+import { ScrollView, Text, Image, View, StyleSheet, TextInput, TouchableHighlight, ListView, ActivityIndicator } from 'react-native'
 import { Button, Text as NBText } from 'native-base'
 import { Images } from '../Themes'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-import finance from '../Utils/finance'
+import Finance from '../Utils/Finance'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import StockCell from './FundSuggestionComponents/StockCell'
 import { connect } from 'react-redux'
@@ -16,38 +16,26 @@ class FundSuggestionScreen extends React.Component {
   constructor (props) {
     super(props)
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-
     this.state = {
-      dataSource: ds.cloneWithRows([{symbol: 'AAPL', company: 'Apple Inc.'}, {symbol: 'MSFT', company: 'Microsoft Corporation'}, {symbol: 'DIS', company: 'The Walt Disney Company'}]),
+      dataSource: ds.cloneWithRows([]),
       loaded: false,
       text: props['fundx' + props.fundNumber],
-      helpText: 'Type a company name or stock symbol.'
+      helpText: 'Type a company name or stock symbol.',
+      fetching: true
     }
     this.onFundSelection = this.onFundSelection.bind(this)
   }
 
-  onTyping (text) {
-    this.setState({
-      text: text.text || '',
-      helpText: 'Validating symbol...'
-    })
-
+  componentWillMount () {
     const that = this
-    finance.symbolSuggest(text.text, this.props.year)
-    .then((result) => {
-      const dataSource = []
-      for (let entry of result) {
-        dataSource.push({symbol: entry})
-      }
-      that.setState({
-        dataSource: that.state.dataSource.cloneWithRows(dataSource),
-        loaded: true,
-        helpText: 'Type a company name or stock symbol.'
+    Finance.getSuggestionFunds(this.props.year)
+      .then(suggestedFunds => {
+        that.setState({
+          dataSource: that.state.dataSource.cloneWithRows(suggestedFunds),
+          fetching: false
+        })
       })
-    })
-     .catch((error) => {
-       console.log('Request failed', error)
-     })
+      .catch(err => console.log(error))
   }
 
   onFundSelection (symbol) {
@@ -61,9 +49,18 @@ class FundSuggestionScreen extends React.Component {
   render () {
     return (
       <View style={styles.container}>
-        <Text style={[styles.helpText, {marginBottom: 30}]}>
-                Select one symbol
-              </Text>
+        <View style={styles.triContainer}>
+          <View style={styles.leftContainer} />
+          <View style={styles.innerContainer}>
+            <Text style={[styles.helpText]}>
+              Select one symbol
+            </Text>
+          </View>
+          <View style={styles.rightContainer}>
+            <Icon style={{marginRight: 15}} name='cancel' size={35} color='white' onPress={() => { NavigationActions.pop() }} />
+          </View>
+        </View>
+        {this.state.fetching ? <ActivityIndicator color='blue' size='large' /> : <NBText />}
         <View style={styles.suggestion}>
           <ListView
             dataSource={this.state.dataSource}
