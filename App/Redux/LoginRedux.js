@@ -34,8 +34,8 @@ export const INITIAL_STATE = Immutable({
   error: null,
   fetching: false,
   year: 2000,
-  fund1: 'AAPL',
-  fund2: 'MSFT'
+  fund1: '',
+  fund2: ''
 })
 
 /* ------------- Reducers ------------- */
@@ -61,9 +61,9 @@ export const requestEnd = (state) => state.merge({ fetching: false })
 export const year = (state, action) => {
   switch (action.type) {
     case 'RANDOMIZE_YEAR':
-      return state.merge({year: Math.floor(Math.random() * (2015 - 1980 + 1) + 1980)})
+      return state.merge({fund1: '', fund2: '', year: Math.floor(Math.random() * (2015 - 1980 + 1) + 1980)})
     case 'SELECT_YEAR':
-      return state.merge({year: action.year})
+      return state.merge({fund1: '', fund2: '', year: action.year})
     default:
       return state
   }

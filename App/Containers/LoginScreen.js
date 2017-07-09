@@ -42,7 +42,8 @@ class LoginScreen extends React.Component {
       fund1: 'AAPL',
       fund2: 'MSFT',
       visibleHeight: Metrics.screenHeight,
-      topLogo: { width: Metrics.screenWidth - 40 }
+      topLogo: { width: Metrics.screenWidth - 40 },
+      formDirty: false
     }
     this.isAttempting = false
     this.handleChangeFund1 = this.handleChangeFund1.bind(this)
@@ -87,10 +88,13 @@ class LoginScreen extends React.Component {
   }
 
   handlePressLogin = () => {
+    if (!this.props.fund1x || !this.props.fund2x || this.props.fund1x === this.props.fund2x) {
+      this.setState({formDirty: true})
+      return
+    }
     this.props.finishRequestStartDispatch()
     return Finance.getResults(this.props.year, this.props.fund1x, this.props.fund2x)
     .then((results) => {
-      console.log('haHAA')
       this.props.finishRequestEndDispatch()
       NavigationActions.resultScreen(results)
     })
@@ -121,11 +125,30 @@ class LoginScreen extends React.Component {
     this.setState({ fund2: text })
   }
 
+  getButtonIsDisabled = () => {
+    return this.props.fetching
+  }
+
+  getErrorText = () => {
+    if (!this.state.formDirty) {
+      return ''
+    }
+    if (!this.props.fund1x || !this.props.fund2x) {
+      return 'Please select two different funds.'
+    }
+    if (this.props.fund1x === this.props.fund2x) {
+      return 'The two funds cannot be the same. Please select different funds.'
+    }
+    return ''
+  }
+
   render () {
     const { username, password, fund1, fund2 } = this.state
     const { year, fetching, fund1x, fund2x } = this.props
     const editable = !fetching
     const textInputStyle = editable ? Styles.textInput : Styles.textInputReadonly
+    const buttonIsDisabled = this.getButtonIsDisabled()
+    const errorText = this.getErrorText()
     return (
       <View style={styles.mainContainer}>
         <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
@@ -160,7 +183,6 @@ class LoginScreen extends React.Component {
                   </NBText>
                     </Button>
                   </View>
-
                 </Item>
                 <Item stackedLabel style={{marginBottom: 30}}>
                   <Label>Fund #2</Label>
@@ -187,10 +209,14 @@ class LoginScreen extends React.Component {
                 </Item>
               </Form>
               <View style={[Styles.loginRow]}>
-                <Button rounded style={{flex: 1, justifyContent: 'center'}} block onPress={this.handlePressLogin} disabled={fetching} >
+                <Button rounded style={{flex: 1, justifyContent: 'center'}} block onPress={this.handlePressLogin} disabled={buttonIsDisabled} >
                   {fetching ? <ActivityIndicator color='blue' /> : <NBText>Finish</NBText>}
                 </Button>
               </View>
+              <NBText style={{color: 'red', margin: 3, textAlign: 'center'}}>
+                {errorText}
+              </NBText>
+              <View />
             </View>
           </View>
         </ScrollView>
