@@ -64,7 +64,6 @@ class HomeScreen extends React.Component {
           onRequestClose={() => { this.setModalVisible(!this.state.modalVisible) }}
           >
           <View style={styles.container}>
-
             <View style={styles.triContainer}>
               <View style={styles.leftContainer}>
                 <Text style={[styles.text, {textAlign: 'left'}]} />
@@ -76,7 +75,7 @@ class HomeScreen extends React.Component {
             </View>
             <ListView
               dataSource={this.state.dataSource}
-              renderRow={(rowData) => <View><Text style={{fontSize: 20, alignSelf: 'center', color: 'white'}}onPress={() => this.onYearSelect(rowData)}>{rowData}</Text></View>}
+              renderRow={(rowData) => <View><Text style={{fontSize: 20, alignSelf: 'center', color: 'white', marginBottom: 5}} onPress={() => this.onYearSelect(rowData)}>{rowData}</Text></View>}
             />
           </View>
         </Modal>

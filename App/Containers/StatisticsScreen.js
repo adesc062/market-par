@@ -17,7 +17,7 @@ const lorem = '1. Let the game pick a random year choose yourself\n'
 class StatisticsScreen extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {page: 'info', gamesPlayed: '...', gamesWon: '...', gamesLost: '...', winPercentage: '...'}
+    this.state = {page: 'help', gamesPlayed: '...', gamesWon: '...', gamesLost: '...', winPercentage: '...'}
   }
 
   componentWillMount () {
@@ -44,7 +44,7 @@ class StatisticsScreen extends React.Component {
           <Text style={styles.subtitle}>
             How to play
           </Text>
-          <Text style={styles.text}>
+          <Text style={styles.flowText}>
           1. Let the game pick a random year choose yourself{'\n'}
           2. Choose two different funds by either{'\n'}
           </Text>
@@ -88,13 +88,14 @@ class StatisticsScreen extends React.Component {
           The market is tracked according to Wilshire 5000 (Full Cap) Total Market.
           </Text>
         </View>
+       case 'statistics':
         return <View>
           <Text style={styles.title}>Statistics</Text>
-          <Text style={styles.text}>Games: played: {this.state.gamesPlayed}</Text>
-          <Text style={styles.text}>Games: won: {this.state.gamesWon} </Text>
-          <Text style={styles.text}>Games: lost: {this.state.gamesLost} </Text>
-          <Text style={styles.text}>Win percentage: {this.state.winPercentage}%</Text>
-          <Text style={styles.text}>Most picked fund: AAPL</Text>
+          <Text style={styles.subtitleX}>Games: played: {this.state.gamesPlayed}</Text>
+          <Text style={styles.subtitleX}>Games: won: {this.state.gamesWon} </Text>
+          <Text style={styles.subtitleX}>Games: lost: {this.state.gamesLost} </Text>
+          <Text style={styles.subtitleX}>Win percentage: {this.state.winPercentage}%</Text>
+          <Text style={styles.subtitleX}>Most picked fund: AAPL</Text>
         </View>
       default :
         return <View><Text style={styles.title}>Information about MarketPar</Text><Text style={styles.text}>{lorem}</Text></View>

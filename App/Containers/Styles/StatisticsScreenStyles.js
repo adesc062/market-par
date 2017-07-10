@@ -25,11 +25,24 @@ export default StyleSheet.create({
     marginBottom: 7,
     fontSize: 20
   },
+  subtitleX: {
+      color: 'white',
+      marginLeft: 15,
+      marginBottom: 15,
+      fontSize: 20
+    },
   text: {
     color: 'white',
     marginLeft: 15,
-    fontSize: 16
+    fontSize: 16,
+    marginBottom: 25
   },
+  flowText: {
+      color: 'white',
+      marginLeft: 15,
+      fontSize: 16,
+      marginBottom: 0
+    },
   indentedText: {
     color: 'white',
     marginLeft: 30,
