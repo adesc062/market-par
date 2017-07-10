@@ -11,7 +11,9 @@ import StorageHelper from '../Utils/StorageHelper'
 
 // Styles
 import styles from './Styles/StatisticsScreenStyles'
-const lorem = 'Lorem ipsum dolor sit amet, sed ex quot antiopam postulant. Usu veri copiosae hendrerit at, est bonorum labores et. Sed at adolescens accommodare, qui laudem everti at, in nam nonumy evertitur.gere populo ad, est ut inani homero graeci. At hinc prodesset vituperatoribus mel, eos option corpora neglegentur cu.'
+const lorem = '1. Let the game pick a random year choose yourself\n'
+               + '2. Choose two different funds by either'
+
 class StatisticsScreen extends React.Component {
   constructor (props) {
     super(props)
@@ -37,10 +39,55 @@ class StatisticsScreen extends React.Component {
   getTab () {
     switch (this.state.page) {
       case 'help':
-        return <View><Text style={styles.title}>Help</Text><Text style={styles.text}>{lorem}</Text></View>
+        return <View>
+          <Text style={styles.title}>Help</Text>
+          <Text style={styles.subtitle}>
+            How to play
+          </Text>
+          <Text style={styles.text}>
+          1. Let the game pick a random year choose yourself{'\n'}
+          2. Choose two different funds by either{'\n'}
+          </Text>
+          <Text style={styles.indentedText}>
+          a. Pressing on “Select fund” and typing a ticker symbol or company name{'\n'}
+          b. Pressing “Suggest” to be given a choice of three funds{'\n'}
+          </Text>
+          <Text style={styles.text}>
+          3. Press finish{'\n'}
+          4. View the results{'\n'}
+          </Text>
+          <Text style={styles.subtitle}>
+           How it works
+          </Text>
+          <Text style={styles.text}>
+          The return of each fund is calculated by diving its value at the end of the year by its value at the beginning of the year.
+          These two returns are averaged to give the user return for the round.{'\n'}
+          The market return is calculated the same way. The outcome of the round is determined by comparing the user return and the market return.
+          </Text>
+        </View>
       case 'info':
-        return <View><Text style={styles.title}>Information about MarketPar</Text><Text style={styles.text}>{lorem}</Text></View>
-      case 'statistics':
+        return <View>
+          <Text style={styles.title}>Information</Text>
+          <Text style={styles.subtitle}>
+          Where is the data coming from?
+          </Text>
+          <Text style={styles.text}>
+          Symbol autocompletion is provided by Yahoo Finance. {'\n'}
+          The historical stock prices are provided by the WIKI database hosted by Quandl.
+          </Text>
+          <Text style={styles.subtitle}>
+          What years are available?
+          </Text>
+          <Text style={styles.text}>
+          From 1980 to 2015 because of the availability of the data.
+          </Text>
+          <Text style={styles.subtitle}>
+          How is the market tracked?
+          </Text>
+          <Text style={styles.text}>
+          The market is tracked according to Wilshire 5000 (Full Cap) Total Market.
+          </Text>
+        </View>
         return <View>
           <Text style={styles.title}>Statistics</Text>
           <Text style={styles.text}>Games: played: {this.state.gamesPlayed}</Text>

@@ -19,9 +19,20 @@ export default StyleSheet.create({
     marginBottom: 5,
     textAlign: 'center'
   },
+  subtitle: {
+    color: 'white',
+    marginLeft: 15,
+    marginBottom: 7,
+    fontSize: 20
+  },
   text: {
     color: 'white',
-    margin: 15,
+    marginLeft: 15,
+    fontSize: 16
+  },
+  indentedText: {
+    color: 'white',
+    marginLeft: 30,
     fontSize: 16
   }
 })
